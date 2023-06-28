@@ -1,0 +1,15 @@
+system:
+  ssl: "disable"
+  mode: "test"
+  host: "127.0.0.1"
+  httpPort: 13016
+  version: "0.0.3"
+  logPath: "./data/logs/server"
+log:
+  level: "debug"
+  timeZone: "Asia/Shanghai"
+  logName: "server"
+  maxBackup: 100000
+  logSuffix: "log9"
+
+
