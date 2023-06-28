@@ -2,6 +2,7 @@ package server
 
 import (
 	"brainwave/internal/global"
+	"brainwave/internal/init/db"
 	"brainwave/internal/init/log"
 	"brainwave/internal/init/viper"
 	"fmt"
@@ -19,6 +20,7 @@ const (
 func Start() {
 	viper.Init()
 	log.Init()
+	db.Init()
 
 	address := fmt.Sprintf("%s:%s", global.Conf.System.Host, global.Conf.System.HttpPort)
 	s := endless.NewServer(address, nil)

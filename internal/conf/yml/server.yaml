@@ -5,11 +5,19 @@ system:
   httpPort: 13016
   version: "0.0.3"
   logPath: "./data/logs/server"
+  db:
+    path: "./data/db"
+    fileName: "server"
+    maxIdleConns: 10
+    maxOpenConns: 100
+    maxLifeTimeSecond: 3600
 log:
   level: "debug"
   timeZone: "Asia/Shanghai"
   logName: "server"
   maxBackup: 100000
-  logSuffix: "log9"
+  logSuffix: "service"
+
+
 
 
