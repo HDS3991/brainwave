@@ -53,6 +53,15 @@ func (e Err) Wrap(err error) Err {
 	return e
 }
 
+func (e *Err) AddDetail(detail any) *Err {
+	if e.detail == nil {
+		e.detail = detail
+		return e
+	}
+	e.detail = fmt.Sprintf("%v: [%v]", e.detail, detail)
+	return e
+}
+
 func DecodeErr(err error) ErrI {
 	if err == nil {
 		return nil
