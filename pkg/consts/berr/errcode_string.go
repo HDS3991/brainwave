@@ -8,20 +8,30 @@ func _() {
 	// An "invalid array index" compiler error signifies that the constant values have changed.
 	// Re-run the stringer command to generate them again.
 	var x [1]struct{}
-	_ = x[ErrorInvalidArgument-1000]
-	_ = x[ErrorNotFound-1001]
-	_ = x[ErrorPermissionDeny-1002]
-	_ = x[ErrorWriteOnClose-1003]
+	_ = x[ErrUnknown - -1]
+	_ = x[ErrorInvalidArgument-1001]
+	_ = x[ErrorNotFound-1002]
+	_ = x[ErrorPermissionDeny-1003]
+	_ = x[ErrorWriteOnClose-1004]
 }
 
-const _ErrCode_name = "error argument invaliderror not founderror permission denyerror write on close"
+const (
+	_ErrCode_name_0 = "error unknown"
+	_ErrCode_name_1 = "error argument invaliderror not founderror permission denyerror write on close"
+)
 
-var _ErrCode_index = [...]uint8{0, 22, 37, 58, 78}
+var (
+	_ErrCode_index_1 = [...]uint8{0, 22, 37, 58, 78}
+)
 
 func (i ErrCode) String() string {
-	i -= 1000
-	if i < 0 || i >= ErrCode(len(_ErrCode_index)-1) {
-		return "ErrCode(" + strconv.FormatInt(int64(i+1000), 10) + ")"
+	switch {
+	case i == -1:
+		return _ErrCode_name_0
+	case 1001 <= i && i <= 1004:
+		i -= 1001
+		return _ErrCode_name_1[_ErrCode_index_1[i]:_ErrCode_index_1[i+1]]
+	default:
+		return "ErrCode(" + strconv.FormatInt(int64(i), 10) + ")"
 	}
-	return _ErrCode_name[_ErrCode_index[i]:_ErrCode_index[i+1]]
 }

@@ -12,7 +12,7 @@ func Init() {
 	v := viper.NewWithOptions()
 	v.SetConfigName("server")
 	v.SetConfigType("yaml")
-	v.AddConfigPath("internal/conf/yml/")
+	v.AddConfigPath("internal/conf")
 	v.AddConfigPath(".")
 	if err := v.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {

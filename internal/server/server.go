@@ -4,6 +4,7 @@ import (
 	"brainwave/internal/global"
 	"brainwave/internal/init/db"
 	"brainwave/internal/init/log"
+	"brainwave/internal/init/router"
 	"brainwave/internal/init/viper"
 	"fmt"
 	"github.com/fvbock/endless"
@@ -22,8 +23,10 @@ func Start() {
 	log.Init()
 	db.Init()
 
+	handler := router.Init()
+
 	address := fmt.Sprintf("%s:%s", global.Conf.System.Host, global.Conf.System.HttpPort)
-	s := endless.NewServer(address, nil)
+	s := endless.NewServer(address, handler)
 	s.ReadHeaderTimeout = readHeaderTimeoutSecond * time.Second
 	s.WriteTimeout = writeTimeoutSecond * time.Second
 	s.MaxHeaderBytes = maxHeaderBytes
@@ -34,7 +37,6 @@ func Start() {
 			global.LOG.Error(err)
 			panic(err)
 		}
-
 	}
 
 }

@@ -1,4 +1,4 @@
-package consts
+package system
 
 const (
 	TimeZone       = "Asia/Shanghai"

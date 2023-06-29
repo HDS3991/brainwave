@@ -3,7 +3,7 @@ package log
 import (
 	"brainwave/internal/conf/server"
 	"brainwave/internal/global"
-	"brainwave/pkg/consts"
+	"brainwave/pkg/consts/system"
 	"brainwave/pkg/logger"
 	"fmt"
 	"github.com/sirupsen/logrus"
@@ -26,7 +26,7 @@ func setOutput(log *logrus.Logger, config server.LogConfig) {
 	writer, err := logger.NewWriterFromConfig(&logger.Config{
 		LogPath:            global.Conf.System.LogPath,
 		FileName:           config.LogName,
-		TimeTagFormat:      consts.DateFormat,
+		TimeTagFormat:      system.DateFormat,
 		MaxRemain:          config.MaxBackup,
 		RollingTimePattern: RollingTimePattern,
 		LogSuffix:          config.LogSuffix,
@@ -53,6 +53,6 @@ func (s *MineFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 		funcion := entry.Caller.Function
 		detailInfo = fmt.Sprintf("(%s: %d)", funcion, entry.Caller.Line)
 	}
-	msg := fmt.Sprintf("[%s] [%s] %s %s %v \n", entry.Time.Format(consts.DateTimeFormat), entry.Level.String(), entry.Message, detailInfo, entry.Data)
+	msg := fmt.Sprintf("[%s] [%s] %s %s %v \n", entry.Time.Format(system.DateTimeFormat), entry.Level.String(), entry.Message, detailInfo, entry.Data)
 	return []byte(msg), nil
 }
