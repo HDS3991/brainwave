@@ -1,4 +1,4 @@
 ErrUnknown: "未知错误"
-ErrorInvalidArgument: "请求参数错误: {{ .detail }}"
+ErrorInvalidArgument: "请求参数不合法: {{ .detail }}"
 ErrorRecordNotFound: "记录未能找到: {{ .detail }}"
 ErrorPermissionDeny: "权限不足: {{ .detail }}"

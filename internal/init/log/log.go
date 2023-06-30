@@ -17,14 +17,14 @@ const (
 
 func Init() {
 	l := logrus.New()
-	setOutput(l, global.Conf.Log)
+	setOutput(l, global.CONF.Log)
 	global.LOG = l
 	global.LOG.Info("init logger successfully")
 }
 
 func setOutput(log *logrus.Logger, config server.LogConfig) {
 	writer, err := logger.NewWriterFromConfig(&logger.Config{
-		LogPath:            global.Conf.System.LogPath,
+		LogPath:            global.CONF.System.LogPath,
 		FileName:           config.LogName,
 		TimeTagFormat:      system.DateFormat,
 		MaxRemain:          config.MaxBackup,

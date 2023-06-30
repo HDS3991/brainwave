@@ -21,12 +21,12 @@ func Init() {
 			panic(fmt.Errorf("fatal error config file: %w", err))
 		}
 	}
-	global.Viper = v
-	if err := v.Unmarshal(&global.Conf); err != nil {
+	global.VIPER = v
+	if err := v.Unmarshal(&global.CONF); err != nil {
 		panic(fmt.Errorf("config file init: %w", err))
 	}
 	v.OnConfigChange(func(e fsnotify.Event) {
-		if err := v.Unmarshal(&global.Conf); err != nil {
+		if err := v.Unmarshal(&global.CONF); err != nil {
 			panic(fmt.Errorf("config file changed: %w", err))
 		}
 		time.Sleep(1 * time.Second)

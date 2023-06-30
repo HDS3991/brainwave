@@ -3,7 +3,8 @@ package base
 import (
 	"brainwave/internal/app/dto/request"
 	"brainwave/internal/app/dto/response"
-	"brainwave/pkg/consts/berr"
+	"brainwave/internal/global"
+	"brainwave/pkg/berr"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +21,9 @@ type Base struct{}
 func (s *Base) Login(c *gin.Context) (any, error) {
 	var req request.LoginReq
 	if err := c.ShouldBindJSON(&req); err != nil {
+		return nil, berr.NewErr(berr.ErrorInvalidArgument).Wrap(err)
+	}
+	if err := global.VALID.Struct(req); err != nil {
 		return nil, berr.NewErr(berr.ErrorInvalidArgument).Wrap(err)
 	}
 	return response.LoginRes{}, nil

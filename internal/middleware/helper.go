@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"brainwave/internal/global"
-	"brainwave/pkg/consts/berr"
+	"brainwave/pkg/berr"
 	"brainwave/pkg/util/helper"
 	"github.com/gin-gonic/gin"
 	"reflect"

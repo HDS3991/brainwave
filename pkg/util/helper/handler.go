@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"brainwave/pkg/consts/berr"
+	"brainwave/pkg/berr"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -9,7 +9,7 @@ import (
 type Response struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
-	Data any    `json:"data"`
+	Data any    `json:"data,omitempty"`
 }
 
 func SetResponse(c *gin.Context, err berr.ErrI, data any) {
@@ -21,7 +21,6 @@ func SetResponse(c *gin.Context, err berr.ErrI, data any) {
 		c.JSON(http.StatusOK, Response{
 			Code: err.Code(),
 			Msg:  msg,
-			Data: struct{}{},
 		})
 		return
 	}

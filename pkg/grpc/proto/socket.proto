@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package socket;
+
+option go_package = "./socket";
+
+message sendReq {
+  int32 type = 1;
+  string data = 2;
+  uint32 uid = 3;
+}
+
+message sendRes {
+  string msg_id = 1;
+}
+
+service socket{
+  rpc send(sendReq) returns(sendRes){}
+}
