@@ -3,30 +3,31 @@ package router
 import (
 	"brainwave/internal/middleware"
 	"brainwave/internal/router"
+	"brainwave/pkg/i18n"
 	"github.com/gin-contrib/gzip"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Init() *gin.Engine {
-	Router := gin.Default()
-	Router.Use(middleware.OperationLog())
-	Router.Use(gzip.Gzip(gzip.DefaultCompression))
-
-	publicGroup := Router.Group("")
+	routers := gin.Default()
+	routers.Use(middleware.OperationLog())
+	routers.Use(gzip.Gzip(gzip.DefaultCompression))
+	routers.Use(i18n.GinI18nLocalize())
+	publicGroup := routers.Group("")
 	{
 		publicGroup.GET("/health", func(c *gin.Context) {
 			c.JSON(200, "ok")
 		})
 	}
 
-	routers := router.Group
+	routerGroup := router.Group
 
-	privateGroup := Router.Group("api/v1")
+	privateGroup := routers.Group("api/v1")
 	privateGroup.Use(middleware.JwtAuth()).Use(middleware.SessionAuth())
 	{
-		routers.InitBaseRouter(privateGroup)
+		routerGroup.InitBaseRouter(privateGroup)
 	}
 
-	return Router
+	return routers
 }

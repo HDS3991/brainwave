@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"brainwave/internal/global"
 	"log"
 	"os"
 	"path"
@@ -38,7 +39,7 @@ func (w *AsynchronousWriter) Close() error {
 		func() {
 			defer func() {
 				if r := recover(); r != nil {
-					//global.LOG.Error(r)
+					global.LOG.Error(r)
 				}
 			}()
 			w.m.Close()

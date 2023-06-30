@@ -1,8 +1,12 @@
 package berr
 
 import (
-	"errors"
+	"brainwave/pkg/i18n"
 	"fmt"
+)
+
+const (
+	detailKey = "detail"
 )
 
 type Err struct {
@@ -20,24 +24,21 @@ type ErrI interface {
 }
 
 func (e Err) Error() string {
-	content := e.msg
-	if e.err != nil {
-		content = fmt.Sprintf("%s - [%v]", content, e.err.Error())
-	}
+	detail := ""
 	if e.detail != nil {
-		content = fmt.Sprintf("%s - [%v]", content, e.detail)
+		detail = fmt.Sprintf("%s - %v", detail, e.detail)
 	}
-	if content == "" {
-		if e.err != nil {
-			return e.err.Error()
-		}
-		return errors.New(e.Msg()).Error()
+	if e.err != nil {
+		detail = fmt.Sprintf("%s - %v", detail, e.err.Error())
 	}
-	return content
+	if e.msg == "" {
+		return detail
+	}
+	return i18n.GetErrMsg(e.msg, map[string]interface{}{detailKey: detail})
 }
 
 func (e Err) Msg() string {
-	return e.msg
+	return i18n.GetErrMsg(e.msg, nil)
 }
 
 func (e Err) Code() int {
@@ -48,7 +49,7 @@ func (e Err) Wrap(err error) Err {
 	if e.err == nil {
 		e.err = err
 	} else {
-		e.err = fmt.Errorf("%v: [%v]", e.err, err.Error())
+		e.err = fmt.Errorf("%v - %v", e.err, err.Error())
 	}
 	return e
 }
@@ -58,7 +59,7 @@ func (e *Err) AddDetail(detail any) *Err {
 		e.detail = detail
 		return e
 	}
-	e.detail = fmt.Sprintf("%v: [%v]", e.detail, detail)
+	e.detail = fmt.Sprintf("%v - %v", e.detail, detail)
 	return e
 }
 
@@ -76,7 +77,7 @@ func DecodeErr(err error) ErrI {
 
 	return Err{
 		code: int(ErrUnknown),
-		msg:  ErrUnknown.String(),
+		msg:  i18n.GetErrMsg(ErrUnknown.String(), map[string]interface{}{detailKey: err.Error()}),
 		err:  err,
 	}
 }

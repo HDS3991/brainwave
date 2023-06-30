@@ -50,9 +50,15 @@ type MineFormatter struct{}
 func (s *MineFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	detailInfo := ""
 	if entry.Caller != nil {
-		funcion := entry.Caller.Function
-		detailInfo = fmt.Sprintf("(%s: %d)", funcion, entry.Caller.Line)
+		fc := entry.Caller.Function
+		file := entry.Caller.File
+		detailInfo = fmt.Sprintf("(%v-%s: %d)", file, fc, entry.Caller.Line)
 	}
-	msg := fmt.Sprintf("[%s] [%s] %s %s %v \n", entry.Time.Format(system.DateTimeFormat), entry.Level.String(), entry.Message, detailInfo, entry.Data)
+	msg := fmt.Sprintf("[%s] [%s] {%s} %s {%v} \n",
+		entry.Time.Format(system.DateTimeFormat),
+		entry.Level.String(),
+		entry.Message,
+		detailInfo,
+		entry.Data)
 	return []byte(msg), nil
 }

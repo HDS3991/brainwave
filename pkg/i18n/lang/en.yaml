@@ -1,0 +1,4 @@
+ErrUnknown: "error unexpected: {{ .detail }}"
+ErrorInvalidArgument: "error argument invalid: {{ .detail }}"
+ErrorRecordNotFound: "error record not found: {{ .detail }}"
+ErrorPermissionDeny: "error permission deny: {{ .detail }}"
